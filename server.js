@@ -12,11 +12,11 @@ app.use(express.json());
 app.use(express.static('.'));
 
 const pool = mysql.createPool({
-    host: 'mysql-3d1f497-phsilvamartins590-643b.j.aivencloud.com',
-    port: '25127',
-    user: 'avnadmin',
-    password: 'AVNS_7gXTgilDt5Pm0Czpcjq',
-    database: 'defaultdb'
+    host: 'centerbeam.proxy.rlwy.net',
+    port: '26392',
+    user: 'root',
+    password: 'xzJaXRzMLArjoUumYxLzJqdMAvwGxfbX',
+    database: 'railway'
 });
 
 app.post('/api/mysql', async (req, res) => {
@@ -25,7 +25,7 @@ app.post('/api/mysql', async (req, res) => {
         switch (tipo) {
             case 'cadastro':
                 var [rows, fields] = await pool.query(
-                    "insert into `cheirinho_de_bolo`.`tbl_login` (`nome`, `login`, `senha`) values (?, ?, ?);",
+                    "insert into `railway`.`tbl_login` (`nome`, `login`, `senha`) values (?, ?, ?);",
                     [nome, login, senha]
                 );
                 if (rows.affectedRows > 0) {
@@ -36,7 +36,7 @@ app.post('/api/mysql', async (req, res) => {
                 break;
             case 'login':
                 var [rows, fields] = await pool.query(
-                    "select * from `cheirinho_de_bolo`.`tbl_login` where `nome` = ? and `login` = ? and `senha` = ?;",
+                    "select * from `railway`.`tbl_login` where `nome` = ? and `login` = ? and `senha` = ?;",
                     [nome, login, senha]
                 );
                 if (rows.length == 1) {
@@ -62,7 +62,7 @@ app.post('/api/mysql', async (req, res) => {
                     addAnd = " and ";
                 }
 
-                var strSql = "select * from `cheirinho_de_bolo`.`tbl_login` where" + 
+                var strSql = "select * from `railway`.`tbl_login` where" + 
                     addNome + addAnd + addLogin + ";";
                 var [rows, fields] = await pool.query(strSql);
                 if (rows.length > 0) {
@@ -78,7 +78,7 @@ app.post('/api/mysql', async (req, res) => {
                 }
                 break;
             case 'atualizacao':
-                var strSql = "select * from `cheirinho_de_bolo`.`tbl_login`;";
+                var strSql = "select * from `railway`.`tbl_login`;";
                 var [rows, fields] = await pool.query(strSql);
                 if (rows.length > 0) {
                     res.json({ 
@@ -127,7 +127,7 @@ app.post('/api/mysql', async (req, res) => {
                     addSenha = " , " + addSenha;
                 }
 
-                var strSql = "update `cheirinho_de_bolo`.`tbl_login` set " + 
+                var strSql = "update `railway`.`tbl_login` set " + 
                     addNome + addLogin + addSenha + 
                     " where `id` = " + addId + ";";
                 var [rows, fields] = await pool.query(strSql);
